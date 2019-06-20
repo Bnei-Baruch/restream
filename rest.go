@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/gorilla/mux"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -61,12 +60,10 @@ func (a *App) saveJsonDB(w http.ResponseWriter, r *http.Request) {
 
 func (a *App) putJson(w http.ResponseWriter, r *http.Request) {
 	var s status
-	vars := mux.Vars(r)
-	endpoint := vars["ep"]
 
 	b, _ := ioutil.ReadAll(r.Body)
 
-	err := s.putExec(endpoint, string(b))
+	err := s.putExec(string(b))
 
 	defer r.Body.Close()
 
@@ -81,13 +78,12 @@ func (a *App) putJson(w http.ResponseWriter, r *http.Request) {
 
 func (a *App) statusJson(w http.ResponseWriter, r *http.Request) {
 	var s status
-	vars := mux.Vars(r)
-	endpoint := vars["ep"]
+
 	id := r.FormValue("id")
 	key := r.FormValue("key")
 	value := r.FormValue("value")
 
-	err := s.getStatus(endpoint, id, key, value)
+	err := s.getStatus(id, key, value)
 
 	if err != nil {
 		s.Status = "error"

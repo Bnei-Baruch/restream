@@ -11,10 +11,10 @@ type status struct {
 	Result map[string]interface{} `json:"jsonst"`
 }
 
-func (s *status) putExec(endpoint string, p string) error {
+func (s *status) putExec(p string) error {
 
-	cmd := exec.Command("/opt/wfexec/"+endpoint+".sh", p)
-	cmd.Dir = "/opt/wfexec/"
+	cmd := exec.Command(EXEC_PATH+PUT_CMD, p)
+	cmd.Dir = EXEC_PATH
 	out, err := cmd.CombinedOutput()
 
 	if err != nil {
@@ -28,11 +28,11 @@ func (s *status) putExec(endpoint string, p string) error {
 	return nil
 }
 
-func (s *status) getStatus(endpoint string, id string, key string, value string) error {
+func (s *status) getStatus(id string, key string, value string) error {
 
 	cmdArguments := []string{id, key, value}
-	cmd := exec.Command("/opt/wfexec/get_"+endpoint+".sh", cmdArguments...)
-	cmd.Dir = "/opt/wfexec/"
+	cmd := exec.Command(EXEC_PATH+GET_CMD, cmdArguments...)
+	cmd.Dir = EXEC_PATH
 	out, err := cmd.CombinedOutput()
 
 	if err != nil {

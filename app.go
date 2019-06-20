@@ -37,8 +37,8 @@ func (a *App) Run(port string) {
 func (a *App) initializeRoutes() {
 	a.Router.HandleFunc("/restream", a.getJsonDB).Methods("GET")
 	a.Router.HandleFunc("/restream", a.saveJsonDB).Methods("PUT")
-	a.Router.HandleFunc("/workflow/{ep}", a.putJson).Methods("PUT")
-	a.Router.HandleFunc("/{ep}/status", a.statusJson).Methods("GET")
+	a.Router.HandleFunc("/restream/exec", a.putJson).Methods("PUT")
+	a.Router.HandleFunc("/restream/status", a.statusJson).Methods("GET")
 }
 
 func respondWithError(w http.ResponseWriter, code int, message string) {
